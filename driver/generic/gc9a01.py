@@ -9,10 +9,10 @@ The following code snippet will instantiate the driver and
 automatically register it to lvgl. Adjust the SPI bus and
 pin configurations to match your hardware setup::
 
-    import ili9xxx
+    from gc9a01 import GC9A01
     from machine import SPI, Pin
     spi = SPI(0, baudrate=24_000_000, sck=Pin(18), mosi=Pin(19), miso=Pin(16))
-    drv = ili9xxx.Ili9341(spi=spi, dc=15, cs=17, rst=14)
+    drv = GC9A01(spi=spi, dc=15, cs=17, rst=14)
 """
 from micropython import const
 
@@ -99,7 +99,7 @@ ILI9XXX_INV_PORTRAIT = st77xx.ST77XX_INV_PORTRAIT
 ILI9XXX_INV_LANDSCAPE = st77xx.ST77XX_INV_LANDSCAPE
 
 
-class Ili9341_hw(st77xx.St77xx_hw):
+class GC9A01_hw(st77xx.St77xx_hw):
     def __init__(self, **kw):
         """ILI9341 TFT Display Driver.
 
@@ -184,10 +184,10 @@ class Ili9341_hw(st77xx.St77xx_hw):
         )
 
 
-class Ili9341(Ili9341_hw, st77xx.St77xx_lvgl):
+class GC9A01(GC9A01_hw, st77xx.St77xx_lvgl):
     def __init__(self, doublebuffer=True, factor=4, **kw):
         """See :obj:`Ili9341_hw` for the meaning of the parameters."""
         import lvgl as lv
 
-        Ili9341_hw.__init__(self, **kw)
+        GC9A01_hw.__init__(self, **kw)
         st77xx.St77xx_lvgl.__init__(self, doublebuffer, factor)
